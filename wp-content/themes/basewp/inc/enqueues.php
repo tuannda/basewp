@@ -7,8 +7,6 @@ function base_scripts()
 {
     wp_enqueue_style('base-style', get_template_directory_uri() . '/assets/main.min.css', array(), _S_VERSION);
 
-    wp_style_add_data('base-style', 'rtl', 'replace');
-
     wp_enqueue_script('base-navigation', get_template_directory_uri() . '/assets/main.min.js', false, _S_VERSION, true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {

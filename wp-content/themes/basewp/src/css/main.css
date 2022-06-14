@@ -3,3 +3,4 @@
 @import 'tailwindcss/utilities';
 @import 'tailwindcss/screens';
 @import '~modules/hero/hero.css';
+@import "~modules/post/post.css";
