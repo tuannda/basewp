@@ -1,5 +1,4 @@
 module.exports = {
-    mode: 'jit',
     content: [
         './src/**/*.js',
         './module/**/*.{js,php,html}',
@@ -9,6 +8,11 @@ module.exports = {
     ],
     darkMode: 'class',
     theme: {
+        spacing: {
+            'some key': {
+                1.5: '0.375rem'
+            }
+        },
         screens: {
             sm: '640px',
             'demo-sm': '720px',

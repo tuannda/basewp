@@ -8,6 +8,11 @@ module.exports = {
     entry: {
         main: './src/js/main.js'
     },
+    optimization: {
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false
+    },
     output: {
         path: path.join(__dirname, 'assets'),
         filename: '[name].min.js',
@@ -16,6 +21,7 @@ module.exports = {
     },
     resolve: {
         alias: {
+            libs: path.resolve(__dirname, 'src/js/libs'),
             modules: path.resolve(__dirname, 'modules')
         },
         extensions: ['.js', '.jsx', '.scss', '.css']
