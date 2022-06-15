@@ -8,6 +8,13 @@ module.exports = {
     entry: {
         main: './src/js/main.js'
     },
+    watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000,
+        followSymlinks: true,
+        stdin: true,
+        ignored: [path.resolve(__dirname, 'node_modules')]
+    },
     optimization: {
         removeAvailableModules: false,
         removeEmptyChunks: false,
