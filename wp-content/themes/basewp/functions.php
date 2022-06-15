@@ -14,8 +14,6 @@ if ( ! defined( '_S_VERSION' ) ) {
 
 require get_template_directory() . '/inc/init.php';
 
-require get_template_directory() . '/inc/widget.php';
-
 require get_template_directory() . '/inc/enqueues.php';
 
 /**
@@ -27,6 +25,7 @@ require get_template_directory() . '/inc/template-tags.php';
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
+require get_template_directory() . '/inc/cleanup.php';
 
 /**
  * Load WooCommerce compatibility file.
