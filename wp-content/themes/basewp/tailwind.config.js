@@ -3,16 +3,10 @@ module.exports = {
         './src/**/*.js',
         './module/**/*.{js,php,html}',
         './partials/**/*.{js,php,html}',
-        './templates/**/*.{js,php,html}',
-        './**/*.{js,php,html}'
+        './templates/**/*.{js,php,html}'
     ],
     darkMode: 'class',
     theme: {
-        spacing: {
-            'some key': {
-                1.5: '0.375rem'
-            }
-        },
         screens: {
             sm: '640px',
             'demo-sm': '720px',
