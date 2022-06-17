@@ -10,5 +10,11 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+[{*.json,*.yml,.babelrc,.browserslistrc,.postcssrc}]
+indent_size = 2
+
+[*.txt]
+end_of_line = crlf
+
 [*.md]
 indent_style = tab
