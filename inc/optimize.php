@@ -1,6 +1,4 @@
 <?php
-
-add_action('wp_head', 'dns_prefetch', 0);
 function dns_prefetch()
 {
     ?>
@@ -9,6 +7,7 @@ function dns_prefetch()
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <?php
 }
+add_action('wp_head', 'dns_prefetch', 0);
 
 // Removes block editor
 add_filter('use_block_editor_for_post', '__return_false');
@@ -26,7 +25,6 @@ add_filter('use_block_editor_for_post', '__return_false'); // Disables the block
 add_filter('gutenberg_use_widgets_block_editor', '__return_false'); // Disables the block editor from managing widgets in the Gutenberg plugin.
 add_filter('use_widgets_block_editor', '__return_false'); // Disables the block editor from managing widgets.
 
-add_action('init', 'basewp_disable_emojis');
 function basewp_disable_emojis()
 {
     remove_action('admin_print_styles', 'print_emoji_styles');
@@ -47,8 +45,8 @@ function basewp_disable_emojis()
         }
     }
 }
+add_action('init', 'basewp_disable_emojis');
 
-add_action('init', 'basewp_disable_gutenberg');
 function basewp_disable_gutenberg()
 {
     function basewp_disable_gutenberg_scripts()
@@ -65,8 +63,8 @@ function basewp_disable_gutenberg()
     add_filter('gutenberg_use_widgets_block_editor', '__return_false'); // Disables the block editor from managing widgets in the Gutenberg plugin.
     add_filter('use_widgets_block_editor', '__return_false'); // Disables the block editor from managing widgets.
 }
+add_action('init', 'basewp_disable_gutenberg');
 
-add_action('init', 'basewp_disable_head_links');
 function basewp_disable_head_links()
 {
     // Disable XML-RPC, RSD, WLW links // https://wordpress.stackexchange.com/q/219181/
@@ -83,7 +81,9 @@ function basewp_disable_head_links()
     // Disable recent comments style // https://wordpress.stackexchange.com/q/289440/
     add_filter('show_recent_comments_widget_style', '__return_false');
 }
+add_action('init', 'basewp_disable_head_links');
 
+//Remove Dashboard widgets
 function remove_dashboard_widgets()
 {
     remove_meta_box('dashboard_php_nag', 'dashboard', 'normal');
@@ -97,6 +97,46 @@ function remove_dashboard_widgets()
     remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
     remove_meta_box('dashboard_activity', 'dashboard', 'normal');
     remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
+    remove_action( 'welcome_panel','wp_welcome_panel' );
+    remove_action( 'try_gutenberg_panel', 'wp_try_gutenberg_panel');
 }
-
 add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
+
+/**
+ * Remove Menu
+ */
+function remove_wp_menu() {
+    remove_submenu_page( 'themes.php', 'widgets.php' );
+    remove_submenu_page( 'themes.php', 'theme-editor.php' );
+    remove_submenu_page( 'themes.php', 'customize.php');
+    remove_submenu_page( 'themes.php', 'themes.php');
+
+    $customizer_url = add_query_arg( 'return', urlencode( remove_query_arg( wp_removable_query_args(), wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), 'customize.php' );
+    remove_submenu_page( 'themes.php', $customizer_url);
+
+    remove_menu_page('edit-comments.php');
+    remove_menu_page('tools.php');
+}
+add_action( 'admin_menu', 'remove_wp_menu', 999 );
+
+add_action( 'admin_bar_menu', function ($adminBar) {
+    {
+        $adminBar->remove_node('wp-logo');
+        $adminBar->remove_node('about');
+        $adminBar->remove_node('wporg');
+        $adminBar->remove_node('documentation');
+        $adminBar->remove_node('support-forums');
+        $adminBar->remove_node('feedback');
+        $adminBar->remove_node('widgets');
+        $adminBar->remove_node('themes');
+        $adminBar->remove_menu('customize');
+        $adminBar->remove_menu('litespeed-menu');
+    }
+}, 999 );
+
+add_filter('acf/settings/show_admin', '__return_false');
+
+// Close comments on the front-end
+add_filter('comments_open', '__return_false', 20, 2);
+add_filter('pings_open', '__return_false', 20, 2);
+add_filter('comments_array', '__return_empty_array', 10, 2);
